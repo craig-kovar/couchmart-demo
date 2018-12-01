@@ -74,7 +74,7 @@ def get_url(endpoint, host_list=bucket.server_nodes, raise_exception=False):
 def get_node_status():
     default_status = {"hostname": "n/a", "ops": 0, "status": "out"}
 
-    node_list = [dict(default_status) for _ in xrange(5)]
+    node_list = [dict(default_status) for _ in range(5)]
     if not aws:
         node_list[0]['ops'] = 400
         raise tornado.gen.Return(node_list)

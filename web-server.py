@@ -48,7 +48,7 @@ class NodeStatusHandler(tornado.web.RequestHandler):
 
 class CBStatusWebSocket(tornado.websocket.WebSocketHandler):
     def open(self):
-        print self
+        print(self)
         if self not in socket_list:
             socket_list.append(self)
             self.red = 255
@@ -59,7 +59,7 @@ class CBStatusWebSocket(tornado.websocket.WebSocketHandler):
             self.get_node_status()
 
     def on_message(self, message):
-        print "on_message received:" + message
+        print("on_message received:" + message)
 
     def on_close(self):
         print("WebSocket closed")
@@ -84,7 +84,7 @@ class LiveOrdersWebSocket(tornado.websocket.WebSocketHandler):
             self.callback.start()
 
     def on_message(self, message):
-        print "on_message received:" + message
+        print("on_message received:" + message)
 
     def on_close(self):
         print("WebSocket closed")
@@ -99,7 +99,7 @@ class LiveOrdersWebSocket(tornado.websocket.WebSocketHandler):
         for order in res:
             new_order = True
             self.RECENT_ORDERS.appendleft(order.doc.value)
-            print order.key, order.doc.value['name']
+            print(order.key, order.doc.value['name'])
 
         if new_order:
             self.NEXT_CUSTOMER = 0  # back to the start
@@ -222,7 +222,7 @@ def make_app():
 
 
 if __name__ == "__main__":
-    print "Running at http://localhost:8888"
+    print("Running at http://localhost:8888")
     app = make_app()
     app.listen(8888)
 
