@@ -1,5 +1,6 @@
 #!/usr/bin/env - python
 
+import os
 import tornado.escape
 import tornado.gen
 import tornado.httpclient
@@ -10,9 +11,9 @@ import settings
 from create_dataset import PRODUCTS as PRODUCTS
 
 if settings.AWS:
-    BOOTSTRAP_NODES = settings.AWS_NODES
+    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AWS_NODES)
 else:
-    BOOTSTRAP_NODES = settings.AZURE_NODES
+    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AZURE_NODES)
 
 BUCKET_URL = "/pools/default/buckets"
 NODE_URL = "/pools/default/serverGroups"
@@ -20,12 +21,12 @@ INDEX_URL = "/indexStatus"
 SERVICE_URL = "/pools/default/nodeServices"
 FTS_URL = "/api/index/English"
 XDCR_URL = "/pools/default/remoteClusters"
-USERNAME = settings.ADMIN_USER
-PASSWORD = settings.ADMIN_PASS
+USERNAME = os.getenv('COUCHMART_ADMIN_USER',settings.ADMIN_USER)
+PASSWORD = os.getenv('COUCHMART_ADMIN_PASSWORD',settings.ADMIN_PASS)
 
-bucket_name = settings.BUCKET_NAME
-user = settings.USERNAME
-password = settings.PASSWORD
+bucket_name = os.getenv('COUCHMART_BUCKET',settings.BUCKET_NAME)
+user = os.getenv('COUCHMART_USER',settings.USERNAME)
+password = os.getenv('COUCHMART_PASSWORD',settings.PASSWORD)
 
 aws = settings.AWS
 bucket = Bucket('couchbase://{0}/{1}'.format(",".join(BOOTSTRAP_NODES),

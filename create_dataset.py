@@ -4,14 +4,15 @@ from __future__ import print_function
 from couchbase.bucket import Bucket
 import settings
 import random
+import os
 
-bucket_name = settings.BUCKET_NAME
-user = settings.USERNAME
-password = settings.PASSWORD
+bucket_name = os.getenv('COUCHMART_BUCKET',settings.BUCKET_NAME)
+user = os.getenv('COUCHMART_USER',settings.USERNAME)
+password = os.getenv('COUCHMART_PASSWORD',settings.PASSWORD)
 if settings.AWS:
-    node = settings.AWS_NODES[0]
+    node = os.getenv('COUCHMART_NODE',settings.AWS_NODES[0])
 else:
-    node = settings.AZURE_NODES[0]
+    node = os.getenv('COUCHMART_NODE',settings.AZURE_NODES[0])
 
 SDK_CLIENT = Bucket('couchbase://{0}/{1}'.format(node, bucket_name),
                     username=user, password=password)

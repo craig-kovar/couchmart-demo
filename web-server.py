@@ -4,6 +4,7 @@ import datetime
 import random
 import time
 import urllib
+import os
 
 import tornado.gen
 import tornado.escape
@@ -23,14 +24,14 @@ import settings
 
 
 socket_list = []
-bucket_name = settings.BUCKET_NAME
-user = settings.USERNAME
-password = settings.PASSWORD
+bucket_name = os.getenv('COUCHMART_BUCKET',settings.BUCKET_NAME)
+user = os.getenv('COUCHMART_USER',settings.USERNAME)
+password = os.getenv('COUCHMART_PASSWORD',settings.PASSWORD)
 
 if settings.AWS:
-    node = settings.AWS_NODES[0]
+    node = os.getenv('COUCHMART_NODE',settings.AWS_NODES[0])
 else:
-    node = settings.AZURE_NODES[0]
+    node = os.getenv('COUCHMART_NODE',settings.AZURE_NODES[0])
 
 bucket = Bucket('couchbase://{0}/{1}'.format(node, bucket_name),
                 username=user, password=password)
