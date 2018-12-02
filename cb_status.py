@@ -11,9 +11,9 @@ import settings
 from create_dataset import PRODUCTS as PRODUCTS
 
 if settings.AWS:
-    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AWS_NODES)
+    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AWS_NODES[0])
 else:
-    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AZURE_NODES)
+    BOOTSTRAP_NODES = os.getenv('COUCHMART_NODE',settings.AZURE_NODES[0])
 
 BUCKET_URL = "/pools/default/buckets"
 NODE_URL = "/pools/default/serverGroups"
@@ -29,7 +29,7 @@ user = os.getenv('COUCHMART_USER',settings.USERNAME)
 password = os.getenv('COUCHMART_PASSWORD',settings.PASSWORD)
 
 aws = settings.AWS
-bucket = Bucket('couchbase://{0}/{1}'.format(",".join(BOOTSTRAP_NODES),
+bucket = Bucket('couchbase://{0}/{1}'.format(BOOTSTRAP_NODES,
                                              bucket_name),
                 username=user,
                 password=password)
